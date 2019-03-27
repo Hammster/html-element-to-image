@@ -1,0 +1,17 @@
+{
+    "name": "html-element-to-image",
+    "version": "1.0.0",
+    "description": "Capture a image from any given HTML element, fast.",
+    "main": "dist/index.js",
+    "repository": "https://github.com/Hammster/html-element-to-image",
+    "author": "Hans Koch <Hammster>",
+    "license": "MIT",
+    "types": "./src/index.d.ts",
+    "scripts": {
+        "build": "tsc"
+    },
+    "devDependencies": {
+        "tslint": "^5.14.0",
+        "typescript": "^3.3.4000"
+    }
+}
