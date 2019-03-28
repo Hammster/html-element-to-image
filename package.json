@@ -8,9 +8,11 @@
     "license": "MIT",
     "types": "./src/index.d.ts",
     "scripts": {
-        "build": "tsc"
+        "build": "tsc && rollup -c rollup.config.js --compact"
     },
     "devDependencies": {
+        "rollup": "^1.7.4",
+        "rollup-plugin-terser": "^4.0.4",
         "tslint": "^5.14.0",
         "tslint-config-standard": "^8.0.1",
         "typescript": "^3.3.4000"

@@ -3,10 +3,10 @@ const captureShowClass = `${prefix}capture-show`;
 const forceOverflowClass = `${prefix}force-overflow`;
 // @TODO, implement usage of padding, margin and returnType
 const defaultOptions = {
-    targetNode: document.body,
-    padding: { top: 0, right: 0, bottom: 0, left: 0 },
     margin: { top: 0, right: 0, bottom: 0, left: 0 },
-    returnType: 'dataUrl'
+    padding: { top: 0, right: 0, bottom: 0, left: 0 },
+    returnType: 'dataUrl',
+    targetNode: document.body
 };
 function addClasses(node) {
     node.classList.add(captureShowClass);
@@ -67,15 +67,11 @@ export default function NodeToDataURL(userConfig) {
     // Build data url
     const svgBase64 = btoa(svg);
     const dataURL = `data:image/svg+xml;base64,${svgBase64}`;
-    // Load data URL into a Image
-    const img = new Image();
-    img.src = dataURL;
     const canvas = document.createElement('canvas');
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         if (canvas) {
             // Load data URL into a Image
             const img = document.createElement('img');
-            console.log(dataURL);
             img.src = dataURL;
             // wait for the image to be loaded, otherwise the buffer is empty
             img.addEventListener('load', () => {
