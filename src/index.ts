@@ -6,13 +6,13 @@ const forceOverflowClass = `${prefix}force-overflow`
 
 // @TODO, implement usage of padding, margin and returnType
 const defaultOptions: ICaptureOptions = {
-    targetNode: document.body,
-    padding: {top: 0, right: 0, bottom: 0, left: 0},
-    margin: {top: 0, right: 0, bottom: 0, left: 0},
-    returnType: 'dataUrl'
+    margin: { top: 0, right: 0, bottom: 0, left: 0 },
+    padding: { top: 0, right: 0, bottom: 0, left: 0 },
+    returnType: 'dataUrl',
+    targetNode: document.body
 }
 
-function addClasses(node: Element): void {
+function addClasses (node: Element): void {
     node.classList.add(captureShowClass)
     let nodeParent = node.parentElement
 
@@ -22,7 +22,7 @@ function addClasses(node: Element): void {
     }
 }
 
-function removeClasses(node: Element): void {
+function removeClasses (node: Element): void {
     node.classList.remove(captureShowClass)
     let nodeParent = node.parentElement
 
@@ -32,7 +32,7 @@ function removeClasses(node: Element): void {
     }
 }
 
-function serializeHead(): string {
+function serializeHead (): string {
     const headClone = document.head.cloneNode(true)
     const captureStyle = document.createElement('style')
 
@@ -48,14 +48,14 @@ function serializeHead(): string {
         .serializeToString(headClone)
 }
 
-function serializeBody(): string {
+function serializeBody (): string {
     return new XMLSerializer()
         .serializeToString(document.body)
         // remove any script tag from the string
         .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
 }
 
-function combineToSvg(node: Element, elBoundingClientRect: ClientRect | DOMRect): string {
+function combineToSvg (node: Element, elBoundingClientRect: ClientRect | DOMRect): string {
     // Add Temporary identification classes
     addClasses(node)
 
@@ -78,7 +78,7 @@ function combineToSvg(node: Element, elBoundingClientRect: ClientRect | DOMRect)
     return svg
 }
 
-export default function NodeToDataURL(userConfig: Partial<ICaptureOptions>): Promise<string> {
+export default function NodeToDataURL (userConfig: Partial<ICaptureOptions>): Promise<string> {
     const config = { ...defaultOptions, ...userConfig }
     const node = config.targetNode
 
@@ -89,18 +89,13 @@ export default function NodeToDataURL(userConfig: Partial<ICaptureOptions>): Pro
     const svgBase64 = btoa(svg)
     const dataURL = `data:image/svg+xml;base64,${svgBase64}`
 
-    // Load data URL into a Image
-    const img = new Image()
-    img.src = dataURL
-
     const canvas = document.createElement('canvas')
 
     return new Promise(
-        function(resolve, reject) {
+        (resolve, reject) => {
             if (canvas) {
                 // Load data URL into a Image
                 const img = document.createElement('img')
-                console.log(dataURL)
                 img.src = dataURL
 
                 // wait for the image to be loaded, otherwise the buffer is empty

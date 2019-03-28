@@ -1,9 +1,11 @@
 {
     "defaultSeverity": "error",
     "extends": [
-        "tslint:recommended"
+        "tslint:recommended",
+        "tslint-config-standard"
     ],
-    "jsRules": {},
-    "rules": {},
-    "rulesDirectory": []
+    "rules": {
+        // overwriting the tslint-config-standard setting via tslint-eslint-rules (ter-)
+        "ter-indent": [true, 4]
+    }
 }
