@@ -6,7 +6,7 @@
     "repository": "https://github.com/Hammster/html-element-to-image",
     "author": "Hans Koch <Hammster>",
     "license": "MIT",
-    "types": "./src/index.d.ts",
+    "types": "./types/index.d.ts",
     "scripts": {
         "build": "tsc && rollup -c rollup.config.js --compact"
     },
