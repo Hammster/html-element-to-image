@@ -1,9 +1,12 @@
 const prefix = '___';
 const captureShowClass = `${prefix}capture-show`;
 const forceOverflowClass = `${prefix}force-overflow`;
+// @TODO, implement usage of padding, margin and returnType
 const defaultOptions = {
     targetNode: document.body,
-    returnType: '',
+    padding: { top: 0, right: 0, bottom: 0, left: 0 },
+    margin: { top: 0, right: 0, bottom: 0, left: 0 },
+    returnType: 'dataUrl'
 };
 function addClasses(node) {
     node.classList.add(captureShowClass);
@@ -24,6 +27,8 @@ function removeClasses(node) {
 function serializeHead() {
     const headClone = document.head.cloneNode(true);
     const captureStyle = document.createElement('style');
+    // These are the style we apply on the element to move the body out off the visible area
+    // The remaining element will be moved back to its original position so it can be rendere without any background.
     captureStyle.innerText += `body {transform: translateY(${window.outerHeight}px) !important; overflow: visible;}`;
     captureStyle.innerText += `.${captureShowClass} {transform: translateY(-${window.outerHeight}px) !important;}`;
     captureStyle.innerText += `.${forceOverflowClass} {overflow: visible !important;}`;
@@ -54,7 +59,9 @@ function combineToSvg(node, elBoundingClientRect) {
     removeClasses(node);
     return svg;
 }
-export default function NodeToDataURL(node, config) {
+export default function NodeToDataURL(userConfig) {
+    const config = Object.assign({}, defaultOptions, userConfig);
+    const node = config.targetNode;
     const elBoundingClientRect = node.getBoundingClientRect();
     const svg = combineToSvg(node, elBoundingClientRect);
     // Build data url
@@ -63,12 +70,28 @@ export default function NodeToDataURL(node, config) {
     // Load data URL into a Image
     const img = new Image();
     img.src = dataURL;
-    const canvas = document.getElementById('canvas');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        canvas.width = elBoundingClientRect.width;
-        canvas.height = elBoundingClientRect.height;
-        ctx.drawImage(img, 0, 0);
-    }
-    return canvas.toDataURL();
+    const canvas = document.createElement('canvas');
+    return new Promise(function (resolve, reject) {
+        if (canvas) {
+            // Load data URL into a Image
+            const img = document.createElement('img');
+            console.log(dataURL);
+            img.src = dataURL;
+            // wait for the image to be loaded, otherwise the buffer is empty
+            img.addEventListener('load', () => {
+                canvas.width = elBoundingClientRect.width;
+                canvas.height = elBoundingClientRect.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                resolve(canvas.toDataURL());
+            });
+            // in case the generated dataURL in invalid
+            img.addEventListener('error', () => {
+                reject();
+            });
+        }
+        else {
+            reject();
+        }
+    });
 }
