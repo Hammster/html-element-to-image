@@ -1,6 +1,6 @@
 declare module "html-element-to-image" {
     export interface ICaptureOptions {
-        targetNode: HTMLElement,
+        targetNode: HTMLElement | Element,
         padding: IDirections;
         margin: IDirections
         returnType: string
@@ -12,4 +12,6 @@ declare module "html-element-to-image" {
         bottom: number,
         left: number
     }
+
+    export default function NodeToDataURL (userConfig: Partial<ICaptureOptions>): Promise<string>
 }
