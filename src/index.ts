@@ -36,7 +36,7 @@ function serializeHead (): string {
     const headClone = document.head.cloneNode(true)
     const captureStyle = document.createElement('style')
 
-    // These are the style we apply on the element to move the body out off the visible area
+    // These are the style we apply on the element to move the body out off the visible area.
     // The remaining element will be moved back to its original position so it can be rendere without any background.
     captureStyle.innerText += `body {transform: translateY(${window.outerHeight}px) !important; overflow: visible;}`
     captureStyle.innerText += `.${captureShowClass} {transform: translateY(-${window.outerHeight}px) !important;}`
@@ -98,7 +98,7 @@ export default function NodeToDataURL (userConfig: Partial<ICaptureOptions>): Pr
                 const img = document.createElement('img')
                 img.src = dataURL
 
-                // wait for the image to be loaded, otherwise the buffer is empty
+                // Wait for the image to be loaded, otherwise the buffer is empty
                 img.addEventListener('load', () => {
                     canvas.width = elBoundingClientRect.width
                     canvas.height = elBoundingClientRect.height
@@ -109,7 +109,7 @@ export default function NodeToDataURL (userConfig: Partial<ICaptureOptions>): Pr
                     resolve(canvas.toDataURL())
                 })
 
-                // in case the generated dataURL in invalid
+                // In case the generated dataURL in invalid
                 img.addEventListener('error', () => {
                     reject()
                 })
