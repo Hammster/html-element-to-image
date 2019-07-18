@@ -4,7 +4,7 @@ const prefix = '___'
 const captureShowClass = `${prefix}capture-show`
 const forceOverflowClass = `${prefix}force-overflow`
 
-// @TODO, implement usage of padding, margin and returnType
+// TODO: implement usage of padding, margin and returnType
 const defaultOptions: ICaptureOptions = {
     margin: { top: 0, right: 0, bottom: 0, left: 0 },
     padding: { top: 0, right: 0, bottom: 0, left: 0 },
