@@ -1,15 +1,16 @@
 declare module "html-element-to-image" {
     export interface ICaptureOptions {
-        targetNode: HTMLElement | Element,
-        padding: IDirections;
+        targetNode: HTMLElement | Element
+        excludedNodes: HTMLElement[] | Element[]
+        padding: IDirections
         margin: IDirections
         returnType: string
     }
 
     export interface IDirections {
-        top: number,
-        right: number,
-        bottom: number,
+        top: number
+        right: number
+        bottom: number
         left: number
     }
 

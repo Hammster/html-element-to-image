@@ -2,19 +2,27 @@ import { ICaptureOptions } from 'html-element-to-image'
 
 const prefix = '___'
 const captureShowClass = `${prefix}capture-show`
+const captureHideClass = `${prefix}capture-hide`
 const forceOverflowClass = `${prefix}force-overflow`
 
 // TODO: implement usage of padding, margin and returnType
 const defaultOptions: ICaptureOptions = {
+    excludedNodes: [],
     margin: { top: 0, right: 0, bottom: 0, left: 0 },
     padding: { top: 0, right: 0, bottom: 0, left: 0 },
     returnType: 'dataUrl',
     targetNode: document.body
 }
 
+let config: ICaptureOptions = defaultOptions
+
 function addClasses (node: Element): void {
     node.classList.add(captureShowClass)
     let nodeParent = node.parentElement
+
+    for (const excludedEl of config.excludedNodes) {
+        excludedEl.classList.add(captureHideClass)
+    }
 
     while (nodeParent) {
         nodeParent.classList.add(forceOverflowClass)
@@ -25,6 +33,10 @@ function addClasses (node: Element): void {
 function removeClasses (node: Element): void {
     node.classList.remove(captureShowClass)
     let nodeParent = node.parentElement
+
+    for (const excludedEl of config.excludedNodes) {
+        excludedEl.classList.remove(captureHideClass)
+    }
 
     while (nodeParent) {
         nodeParent.classList.remove(forceOverflowClass)
@@ -79,7 +91,7 @@ function combineToSvg (node: Element, elBoundingClientRect: ClientRect | DOMRect
 }
 
 export default function NodeToDataURL (userConfig: Partial<ICaptureOptions>): Promise<string> {
-    const config = { ...defaultOptions, ...userConfig }
+    config = { ...defaultOptions, ...userConfig }
     const node = config.targetNode
 
     const elBoundingClientRect = node.getBoundingClientRect()
