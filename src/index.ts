@@ -52,6 +52,7 @@ function serializeHead (): string {
     // The remaining element will be moved back to its original position so it can be rendere without any background.
     captureStyle.innerText += `body {transform: translateY(${window.outerHeight}px) !important; overflow: visible;}`
     captureStyle.innerText += `.${captureShowClass} {transform: translateY(-${window.outerHeight}px) !important;}`
+    captureStyle.innerText += `.${captureHideClass} {display: none !important;}`
     captureStyle.innerText += `.${forceOverflowClass} {overflow: visible !important;}`
 
     headClone.appendChild(captureStyle)
