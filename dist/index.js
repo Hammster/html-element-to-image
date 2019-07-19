@@ -1,16 +1,22 @@
 const prefix = '___';
 const captureShowClass = `${prefix}capture-show`;
+const captureHideClass = `${prefix}capture-hide`;
 const forceOverflowClass = `${prefix}force-overflow`;
-// @TODO, implement usage of padding, margin and returnType
+// TODO: implement usage of padding, margin and returnType
 const defaultOptions = {
+    excludedNodes: [],
     margin: { top: 0, right: 0, bottom: 0, left: 0 },
     padding: { top: 0, right: 0, bottom: 0, left: 0 },
     returnType: 'dataUrl',
     targetNode: document.body
 };
+let config = defaultOptions;
 function addClasses(node) {
     node.classList.add(captureShowClass);
     let nodeParent = node.parentElement;
+    for (const excludedEl of config.excludedNodes) {
+        excludedEl.classList.add(captureHideClass);
+    }
     while (nodeParent) {
         nodeParent.classList.add(forceOverflowClass);
         nodeParent = nodeParent.parentElement;
@@ -19,6 +25,9 @@ function addClasses(node) {
 function removeClasses(node) {
     node.classList.remove(captureShowClass);
     let nodeParent = node.parentElement;
+    for (const excludedEl of config.excludedNodes) {
+        excludedEl.classList.remove(captureHideClass);
+    }
     while (nodeParent) {
         nodeParent.classList.remove(forceOverflowClass);
         nodeParent = nodeParent.parentElement;
@@ -27,7 +36,7 @@ function removeClasses(node) {
 function serializeHead() {
     const headClone = document.head.cloneNode(true);
     const captureStyle = document.createElement('style');
-    // These are the style we apply on the element to move the body out off the visible area
+    // These are the style we apply on the element to move the body out off the visible area.
     // The remaining element will be moved back to its original position so it can be rendere without any background.
     captureStyle.innerText += `body {transform: translateY(${window.outerHeight}px) !important; overflow: visible;}`;
     captureStyle.innerText += `.${captureShowClass} {transform: translateY(-${window.outerHeight}px) !important;}`;
@@ -60,7 +69,7 @@ function combineToSvg(node, elBoundingClientRect) {
     return svg;
 }
 export default function NodeToDataURL(userConfig) {
-    const config = Object.assign({}, defaultOptions, userConfig);
+    config = Object.assign({}, defaultOptions, userConfig);
     const node = config.targetNode;
     const elBoundingClientRect = node.getBoundingClientRect();
     const svg = combineToSvg(node, elBoundingClientRect);
@@ -73,7 +82,7 @@ export default function NodeToDataURL(userConfig) {
             // Load data URL into a Image
             const img = document.createElement('img');
             img.src = dataURL;
-            // wait for the image to be loaded, otherwise the buffer is empty
+            // Wait for the image to be loaded, otherwise the buffer is empty
             img.addEventListener('load', () => {
                 canvas.width = elBoundingClientRect.width;
                 canvas.height = elBoundingClientRect.height;
@@ -81,7 +90,7 @@ export default function NodeToDataURL(userConfig) {
                 ctx.drawImage(img, 0, 0);
                 resolve(canvas.toDataURL());
             });
-            // in case the generated dataURL in invalid
+            // In case the generated dataURL in invalid
             img.addEventListener('error', () => {
                 reject();
             });
