@@ -3,7 +3,7 @@
 
 ## Install
 
-```sh
+```bash
 // npm
 npm install html-element-to-image
 
@@ -13,9 +13,9 @@ yarn add html-element-to-image
 
 ## 📖 Example
 
-https://codepen.io/Hammster/pen/ZEYvxLa
+Codepen: https://codepen.io/Hammster/pen/ZEYvxLa
 
-```
+```js
 import { NodeToDataURL } from 'html-element-to-image'
 
 const visualSource = document.getElementById('source')
