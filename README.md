@@ -11,6 +11,27 @@ npm install html-element-to-image
 yarn add html-element-to-image
 ```
 
+## 📖 Example
+
+https://codepen.io/Hammster/pen/ZEYvxLa
+
+```
+import { NodeToDataURL } from 'html-element-to-image'
+
+const visualSource = document.getElementById('source')
+const imageTarget = document.getElementById('target')
+const excluded = document.querySelectorAll('.unwanted-element')
+
+NodeToDataURL({
+  targetNode: visualSource,
+  excludedNodes: excluded,
+  customStyle: '.highlighted-element { background: red; }'
+})
+  .then((url) => {
+  imageTarget.setAttribute('src', url);
+})
+```
+
 ## 🔬 Differences to Other Libraries
 
 Compared to [html-to-image](https://github.com/bubkoo/html-to-image), [dom-to-image](https://github.com/tsayen/dom-to-image) and [dom-to-image-more](https://github.com/1904labs/dom-to-image-more) this library uses a different approach, which leads to a big performance increase. Instead of making a [deep copy](https://en.wikipedia.org/wiki/Object_copying#Deep_copy) of the targeted element with applied styles via `el.getComputedStyle()`. This library uses the available DOM for serialization. Before and after the serialization, obfuscated classes get added to hide the parts we don't want to be displayed.
