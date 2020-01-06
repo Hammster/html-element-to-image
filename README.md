@@ -27,7 +27,7 @@ NodeToDataURL({
   excludedNodes: excluded,
   customStyle: '.highlighted-element { background: red; }'
 })
-  .then((url) => {
+.then((url) => {
   imageTarget.setAttribute('src', url);
 })
 ```
