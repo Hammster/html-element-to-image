@@ -99,7 +99,7 @@ function combineToSvg(node, elBoundingClientRect) {
     const svgString = new XMLSerializer().serializeToString(svg);
     return svgString;
 }
-export function NodeToDataURL(userConfig) {
+export default function nodeToDataURL(userConfig) {
     config = Object.assign(Object.assign({}, defaultOptions), userConfig);
     const node = config.targetNode;
     const elBoundingClientRect = node.getBoundingClientRect();

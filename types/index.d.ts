@@ -10,4 +10,4 @@ export interface IDirections {
     bottom: number;
     left: number;
 }
-export declare function NodeToDataURL(userConfig: Partial<ICaptureOptions>): Promise<string>;
+export default function nodeToDataURL(userConfig: Partial<ICaptureOptions>): Promise<string>;

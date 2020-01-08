@@ -15,14 +15,15 @@ yarn add html-element-to-image
 
 Codepen: https://codepen.io/Hammster/pen/ZEYvxLa
 
+ESM
 ```js
-import { NodeToDataURL } from 'html-element-to-image'
+import nodeToDataURL from 'html-element-to-image'
 
 const visualSource = document.getElementById('source')
 const imageTarget = document.getElementById('target')
 const excluded = document.querySelectorAll('.unwanted-element')
 
-NodeToDataURL({
+nodeToDataURL({
   targetNode: visualSource,
   excludedNodes: excluded,
   customStyle: '.highlighted-element { background: red; }'
@@ -31,6 +32,9 @@ NodeToDataURL({
   imageTarget.setAttribute('src', url);
 })
 ```
+
+UMD
+> Exposes the function `nodeToDataURL` to the window/global
 
 ## 🔬 Differences to Other Libraries
 
@@ -58,3 +62,4 @@ Another difference is that this library has no issue at all with `SVG Sprite She
 ## 💔 Know Issues
 
 - The canvas is not yet DPI aware
+- styles from `html` and `body` can sometimes be overwritten by the [Specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity)

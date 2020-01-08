@@ -145,7 +145,7 @@ function combineToSvg (node: Element, elBoundingClientRect: ClientRect | DOMRect
     return svgString
 }
 
-export function NodeToDataURL (userConfig: Partial<ICaptureOptions>): Promise<string> {
+export default function nodeToDataURL (userConfig: Partial<ICaptureOptions>): Promise<string> {
     config = { ...defaultOptions, ...userConfig }
 
     const node = config.targetNode
