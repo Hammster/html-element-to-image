@@ -1,6 +1,6 @@
 {
     "name": "html-element-to-image",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "description": "Capture a image from any given HTML element, fast.",
     "main": "dist/index.js",
     "repository": "https://github.com/Hammster/html-element-to-image",

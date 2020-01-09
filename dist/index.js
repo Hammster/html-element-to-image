@@ -105,8 +105,8 @@ export default function nodeToDataURL(userConfig) {
     const elBoundingClientRect = node.getBoundingClientRect();
     const svg = combineToSvg(node, elBoundingClientRect);
     // Build base64 data url
-    const svgBase64 = btoa(svg);
-    const dataURL = `data:image/svg+xml;base64,${svgBase64}`;
+    const svgBase64 = encodeURIComponent(svg);
+    const dataURL = `data:image/svg+xml,${svgBase64}`;
     const canvas = document.createElement('canvas');
     return new Promise((resolve, reject) => {
         if (!canvas) {
