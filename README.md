@@ -63,3 +63,5 @@ Another difference is that this library has no issue at all with `SVG Sprite She
 
 - The canvas is not yet DPI aware
 - styles from `html` and `body` can sometimes be overwritten by the [Specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity)
+- Lazy loaded components can break rendering
+- Shadow DOM
