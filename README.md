@@ -12,7 +12,7 @@ npm install html-element-to-image
 Codepen: https://codepen.io/Hammster/pen/ZEYvxLa
 
 ESM
-```js
+```html
 <script type="module">
   import nodeToDataURL from 'html-element-to-image'
 
