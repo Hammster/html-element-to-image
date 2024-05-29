@@ -1,30 +1,18 @@
-export interface ICaptureOptions {
-    targetNode: HTMLElement | Element
-    excludedNodes: HTMLElement[] | Element[]
-    customStyle: string
-    returnType: string
-}
-
-export interface IDirections {
-    top: number
-    right: number
-    bottom: number
-    left: number
-}
+import type { CaptureOptions } from '../types/index'
 
 const prefix = '___'
 const captureShowClass = `${prefix}capture-show`
 const captureHideClass = `${prefix}capture-hide`
 const forceOverflowClass = `${prefix}force-overflow`
 
-const defaultOptions: ICaptureOptions = {
+const defaultOptions: CaptureOptions = {
     customStyle: '',
     excludedNodes: [],
     returnType: 'dataUrl',
     targetNode: document.body
 }
 
-let config: ICaptureOptions = defaultOptions
+let config: CaptureOptions = defaultOptions
 
 function addClasses (node: Element): void {
     node.classList.add(captureShowClass)
@@ -54,7 +42,7 @@ function removeClasses (node: Element): void {
     }
 }
 
-function serializeHead (elBoundingClientRect: ClientRect | DOMRect): string {
+function serializeHead (elBoundingClientRect: DOMRect): string {
     const headClone = document.head.cloneNode(true) as HTMLHeadElement
     const captureStyle = document.createElement('style')
 
@@ -103,7 +91,7 @@ function serializeBody (): string {
     )
 }
 
-function combineToSvg (node: Element, elBoundingClientRect: ClientRect | DOMRect): string {
+function combineToSvg (node: Element, elBoundingClientRect: DOMRect): string {
     // Add Temporary identification classes
     addClasses(node)
 
@@ -145,7 +133,7 @@ function combineToSvg (node: Element, elBoundingClientRect: ClientRect | DOMRect
     return svgString
 }
 
-export default function nodeToDataURL (userConfig: Partial<ICaptureOptions>): Promise<string> {
+export default function nodeToDataURL (userConfig: Partial<CaptureOptions>): Promise<string> {
     config = { ...defaultOptions, ...userConfig }
 
     const node = config.targetNode

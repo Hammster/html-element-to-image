@@ -4,11 +4,7 @@
 ## Install
 
 ```bash
-// npm
 npm install html-element-to-image
-
-// yarn
-yarn add html-element-to-image
 ```
 
 ## 📖 Example
@@ -17,20 +13,27 @@ Codepen: https://codepen.io/Hammster/pen/ZEYvxLa
 
 ESM
 ```js
-import nodeToDataURL from 'html-element-to-image'
+<script type="module">
+  import nodeToDataURL from 'html-element-to-image'
 
-const visualSource = document.getElementById('source')
-const imageTarget = document.getElementById('target')
-const excluded = document.querySelectorAll('.unwanted-element')
+  const visualSource = document.getElementById('source')
+  const imageTarget = document.getElementById('target')
+  const excluded = document.querySelectorAll('.unwanted-element')
 
-nodeToDataURL({
-  targetNode: visualSource,
-  excludedNodes: excluded,
-  customStyle: '.highlighted-element { background: red; }'
-})
-.then((url) => {
-  imageTarget.setAttribute('src', url);
-})
+  nodeToDataURL({
+    targetNode: visualSource,
+    excludedNodes: excluded,
+    customStyle: '.highlighted-element { background: red; }'
+  })
+  .then((url) => {
+    imageTarget.setAttribute('src', url);
+  })
+</script>
+```
+
+CJS
+```
+const nodeToDataURL = require('html-element-to-image');
 ```
 
 UMD

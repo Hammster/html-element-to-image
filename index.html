@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container { background: #CCC; }
+
+        .block {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background: #888;
+            border-radius: 33%;
+            color: white;
+            font-size: 10px;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        .block-child {
+            position: absolute;
+            left: 70px;
+            top: 20px;
+            width: 50px;
+            height: 50px;
+            background: #333;
+            border-radius: 33%;
+        }
+    </style>
+</head>
+<body>
+    Source:
+    <div class="container">
+    <div id="source" class="block">
+        T説🧜pѬѬasѪ"§§)("!编/)$=?!°&%)?§"$(§sw汉字编码§"$(§sw汉字方法orФdpѬѬasѪ"§§)("!/)$=?!°&%)?编码方法orФd
+        <div class="block-child"></div>
+    </div>
+    </div>
+
+    Target (Copy without child and overloaded style):
+    <div class="container">
+        <img id="target"/>
+    </div>
+    <script type="module">
+        import nodeToDataURL from './src/index.ts'
+        
+        const visualSource = document.getElementById('source')
+        const imageTarget = document.getElementById('target')
+        const excluded = document.querySelectorAll('.block-child')
+
+        nodeToDataURL({
+            targetNode: visualSource,
+            excludedNodes: excluded,
+            customStyle: '.block { background: red; }'
+        })
+        .then((url) => {
+            imageTarget.setAttribute('src', url);
+        })
+    </script>
+</body>
+</html>
